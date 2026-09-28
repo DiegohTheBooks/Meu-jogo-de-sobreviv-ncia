@@ -24,11 +24,12 @@ export default function GameCanvas() {
     });
 
     gameRef.current = game;
+
     return () => {
       game.destroy(true);
       gameRef.current = null;
     };
   }, []);
 
-  return <div ref={hostRef} className="fixed inset-0 h-full w-full outline-none" style={{ touchAction: "none" }} />;
+  return <div ref={hostRef} style={{ position: "fixed", inset: 0, width: "100%", height: "100%", outline: "none", touchAction: "none" }} />;
 }

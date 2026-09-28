@@ -1,17 +1,17 @@
 # Assets
 
-## V0.2 policy
+## Política V0.2
 
-The game must not depend on Manus storage, signed URLs, external asset hosts or backend services.
+O jogo não deve depender de Manus storage, URLs assinadas, hosts externos de assets ou backend.
 
-The current Phaser migration uses procedural graphics for runtime entities so the game is self-contained.
+A migração atual usa gráficos procedurais para as entidades de runtime, deixando o jogo independente enquanto os assets finais são organizados.
 
-## Future repository-owned assets
+## Assets futuros
 
-When final art is introduced, keep it under:
+Quando a arte final for adicionada, manter tudo dentro de:
 
 ```
-client/public/assets/
+public/assets/
 ├── characters/
 ├── animals/
 ├── environment/
@@ -20,8 +20,8 @@ client/public/assets/
 └── audio/
 ```
 
-Gameplay code should reference repository-local paths only.
+O código deve referenciar apenas caminhos pertencentes ao próprio repositório.
 
-## Rule
+## Regra
 
-An asset is considered valid for the project only when the game can run after cloning the repository without credentials, Manus storage, a server-side asset proxy or an online account.
+Um asset só é considerado válido quando o jogo pode ser executado depois de clonar o repositório sem credenciais, Manus storage, proxy de servidor ou conta online.

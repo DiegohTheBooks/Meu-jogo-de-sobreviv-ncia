@@ -1,34 +1,42 @@
 # Structure — V0.2 foundation
 
+## Root
+- `index.html` — entry point do navegador.
+- `package.json` — scripts e dependências do projeto.
+- `vite.config.ts` — configuração do Vite.
+- `src/` — código da aplicação.
+- `public/` — assets estáticos futuros.
+- `dist/` — saída gerada pelo build, não é código-fonte.
+
 ## Host
-- `client/src/App.tsx` — mounts the game.
-- `client/src/components/GameCanvas.tsx` — lifecycle-safe React/Phaser bridge.
-- `client/src/index.css` — HUD, menus, inventory and responsive presentation.
+- `src/App.tsx` — monta o jogo.
+- `src/components/GameCanvas.tsx` — ponte mínima entre React e Phaser.
+- `src/index.css` — HUD, menus, inventário e apresentação.
 
 ## Game
-- `client/src/game/scene.ts` — Phaser 3 world, player, animals, resources, campfires, camera and interaction loop.
-- `client/src/game/state.ts` — typed gameplay data, recipes, weapons and versioned save payload.
-- `client/src/game/systems.ts` — survival, crafting and IndexedDB persistence.
+- `src/game/scene.ts` — mundo Phaser 3, jogador, animais, recursos, fogueiras, câmera e interação.
+- `src/game/state.ts` — dados tipados, receitas, armas e payload versionado de save.
+- `src/game/systems.ts` — sobrevivência, crafting e persistência IndexedDB.
 
 ## Engine
-The game now uses **Phaser 3.90.0**. React is only the host shell; gameplay is owned by Phaser.
+O jogo usa **Phaser 3.90.0**. React existe somente como shell para montar o canvas; a lógica do jogo pertence ao Phaser.
 
-There is no Babylon.js dependency and no Manus runtime/storage dependency in the application stack.
+Não há dependência de Babylon.js, Manus runtime/storage ou backend.
 
 ## Persistence
-Saves use IndexedDB database `meu-game-sobrevivencia`, store `saves`, record `main`.
+Saves usam IndexedDB, banco `meu-game-sobrevivencia`, store `saves`, registro `main`.
 
-The save layer is versioned and can migrate the old `ilha-selvagem-save-v1` localStorage snapshot once. New saves are written to IndexedDB.
+A camada de save é versionada e pode migrar uma gravação antiga da chave `ilha-selvagem-save-v1` do localStorage para o IndexedDB.
 
-## Current V0.2 migration state
-- Phaser 3 gameplay scene: migrated.
-- localStorage primary save: replaced by IndexedDB.
-- Manus Vite runtime/storage proxy: removed.
-- Manus-hosted image paths: no longer required by the game.
-- Runtime art: temporarily procedural, so the project is self-contained while independent assets are organized.
+## Estado da migração
+- Phaser 3: migrado.
+- localStorage primário: substituído por IndexedDB.
+- runtime/debug/storage do Manus: removido.
+- caminhos de assets do Manus: removidos.
+- visuais de runtime: temporariamente procedurais para manter o projeto independente.
 
-## Next seams
-1. Move final art/audio into repository-owned `public/assets`.
-2. Split the large Phaser scene into entities/systems as the gameplay stabilizes.
-3. Persist more world state (resource timers, animal state) after the core migration is validated.
-4. Add real sprite sheets, animation states, audio and richer biome composition.
+## Próximas divisões naturais
+1. Colocar arte e áudio finais em `public/assets`.
+2. Dividir a cena Phaser grande em entidades/sistemas quando a jogabilidade estabilizar.
+3. Persistir progressivamente o estado completo do mundo.
+4. Adicionar sprites, animações, áudio e composição mais rica dos biomas.

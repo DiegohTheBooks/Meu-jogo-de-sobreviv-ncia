@@ -1,6 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap');
-@import "tailwindcss";
-@import "tw-animate-css";
 
 :root { font-family: 'DM Sans', sans-serif; color: #f7f1dc; background: #071b22; font-synthesis: none; }
 * { box-sizing: border-box; }
@@ -43,7 +41,7 @@ button { font: inherit; }
 .inventory-line { display:flex; justify-content:space-between; color:#c5d0c0; font-size: 11px; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,.06); }
 .inventory-line span:last-child { color: #f5d993; font-family: 'Space Grotesk'; }
 
-.overlay { position: absolute; inset: 0; display:flex; align-items:center; justify-content:center; pointer-events:auto; background: radial-gradient(circle at 65% 44%, rgba(18,72,66,.2), rgba(2,17,22,.76)), url('/manus-storage/survival-reference_f6ca0c79.png') center/cover; }
+.overlay { position: absolute; inset: 0; display:flex; align-items:center; justify-content:center; pointer-events:auto; background: radial-gradient(circle at 65% 44%, rgba(18,72,66,.2), rgba(2,17,22,.94)); }
 .overlay::after { content:''; position:absolute; inset:0; background: linear-gradient(90deg, rgba(3,17,22,.93) 0%, rgba(3,17,22,.66) 45%, rgba(3,17,22,.18) 100%); pointer-events:none; }
 .menu-wrap { position:relative; z-index:1; width:min(1080px, 92vw); min-height: 610px; display:grid; grid-template-columns: 1.05fr .95fr; align-items:center; gap: 44px; }
 .menu-copy { padding: 24px 0; }
