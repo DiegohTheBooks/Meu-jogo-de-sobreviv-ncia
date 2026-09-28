@@ -1,46 +1,34 @@
 import { useEffect, useRef } from "react";
-import { Engine } from "@babylonjs/core/Engines/engine";
-import { createGameScene, type GameHandle } from "@/game/scene";
+import Phaser from "phaser";
+import { SurvivalScene } from "@/game/scene";
 
 export default function GameCanvas() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const startedRef = useRef(false);
+  const hostRef = useRef<HTMLDivElement>(null);
+  const gameRef = useRef<Phaser.Game | null>(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas || startedRef.current) return;
-    startedRef.current = true;
+    const host = hostRef.current;
+    if (!host || gameRef.current) return;
 
-    const engine = new Engine(canvas, true, {
-      preserveDrawingBuffer: true,
-      stencil: true,
-      adaptToDeviceRatio: true,
+    const game = new Phaser.Game({
+      type: Phaser.AUTO,
+      parent: host,
+      width: window.innerWidth,
+      height: window.innerHeight,
+      backgroundColor: "#0a4a52",
+      render: { antialias: true, roundPixels: false, pixelArt: false },
+      scale: { mode: Phaser.Scale.RESIZE, autoCenter: Phaser.Scale.CENTER_BOTH },
+      scene: [SurvivalScene],
+      input: { keyboard: true },
+      banner: false,
     });
 
-    let handle: GameHandle | null = null;
-    let disposed = false;
-    createGameScene(engine, canvas).then((nextHandle) => {
-      if (disposed) {
-        nextHandle.dispose();
-        engine.dispose();
-        return;
-      }
-      handle = nextHandle;
-      engine.runRenderLoop(() => nextHandle.scene.render());
-    });
-
-    const onResize = () => engine.resize();
-    window.addEventListener("resize", onResize);
-
+    gameRef.current = game;
     return () => {
-      disposed = true;
-      window.removeEventListener("resize", onResize);
-      handle?.dispose();
-      engine.stopRenderLoop();
-      engine.dispose();
-      startedRef.current = false;
+      game.destroy(true);
+      gameRef.current = null;
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="fixed inset-0 h-full w-full outline-none" style={{ touchAction: "none" }} />;
+  return <div ref={hostRef} className="fixed inset-0 h-full w-full outline-none" style={{ touchAction: "none" }} />;
 }
