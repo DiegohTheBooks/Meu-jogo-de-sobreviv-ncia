@@ -277,7 +277,7 @@ export class SurvivalScene extends Phaser.Scene {
       left:kb.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT), right:kb.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT),
       space:kb.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE), e:kb.addKey("E"), f:kb.addKey("F"),
       g:kb.addKey("G"), q:kb.addKey("Q"), i:kb.addKey("I"), c:kb.addKey("C"),
-      one:kb.addKey("ONE"), two:kb.addKey("TWO"), three:kb.addKey("THREE"), four:kb.addKey("FOUR"),
+      one:kb.addKey(Phaser.Input.Keyboard.KeyCodes.ONE), two:kb.addKey(Phaser.Input.Keyboard.KeyCodes.TWO), three:kb.addKey(Phaser.Input.Keyboard.KeyCodes.THREE), four:kb.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR),
     };
   }
 
