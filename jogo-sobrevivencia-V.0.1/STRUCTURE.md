@@ -1,25 +1,34 @@
-# Structure
+# Structure — V0.2 foundation
 
 ## Host
-- `client/src/App.tsx` — sole route renders the game canvas.
-- `client/src/components/GameCanvas.tsx` — lifecycle-safe React/Babylon bridge.
-- `client/src/index.css` — HUD, menu, overlay, typography and responsive styling.
+- `client/src/App.tsx` — mounts the game.
+- `client/src/components/GameCanvas.tsx` — lifecycle-safe React/Phaser bridge.
+- `client/src/index.css` — HUD, menus, inventory and responsive presentation.
 
-## Gameplay modules
-- `client/src/game/scene.ts` — scene composition, camera, world loop, DOM HUD, menu and input wiring.
-- `client/src/game/state.ts` — typed inventory, survival state, recipes, weapon data and save payloads.
-- `client/src/game/input.ts` — semantic keyboard input and cleanup.
-- `client/src/game/models.ts` — `Player`, `ResourceNode`, `Animal`, and `Campfire` own their Babylon meshes and local behavior.
-- `client/src/game/systems.ts` — `CraftingSystem`, `SurvivalSystem`, and `SaveSystem` own rules independent of React.
+## Game
+- `client/src/game/scene.ts` — Phaser 3 world, player, animals, resources, campfires, camera and interaction loop.
+- `client/src/game/state.ts` — typed gameplay data, recipes, weapons and versioned save payload.
+- `client/src/game/systems.ts` — survival, crafting and IndexedDB persistence.
 
-## Rendering contract
-Babylon owns the canvas, scene graph, orthographic camera, lights, materials and render loop. React only mounts the canvas. The DOM HUD is created and destroyed by the game scene so gameplay remains framework-agnostic.
+## Engine
+The game now uses **Phaser 3.90.0**. React is only the host shell; gameplay is owned by Phaser.
 
-## Asset hints
-- Generated island texture: tile/stretch on the top-down island disc.
-- Generated survivor male/female PNGs: alpha-enabled player plane and character selection cards.
-- Generated animal kit: field-guide visual in the start menu; runtime wildlife uses lightweight procedural silhouettes for distinct AI and low object count.
-- Generated reference: start-menu scenic backdrop and art-direction anchor.
+There is no Babylon.js dependency and no Manus runtime/storage dependency in the application stack.
 
-## Expansion seams
-Add new `ResourceType`, recipes, `WeaponId`, animal behavior modes, campfire upgrades and biomes without changing React. Save payload is versioned and already includes world structures.
+## Persistence
+Saves use IndexedDB database `meu-game-sobrevivencia`, store `saves`, record `main`.
+
+The save layer is versioned and can migrate the old `ilha-selvagem-save-v1` localStorage snapshot once. New saves are written to IndexedDB.
+
+## Current V0.2 migration state
+- Phaser 3 gameplay scene: migrated.
+- localStorage primary save: replaced by IndexedDB.
+- Manus Vite runtime/storage proxy: removed.
+- Manus-hosted image paths: no longer required by the game.
+- Runtime art: temporarily procedural, so the project is self-contained while independent assets are organized.
+
+## Next seams
+1. Move final art/audio into repository-owned `public/assets`.
+2. Split the large Phaser scene into entities/systems as the gameplay stabilizes.
+3. Persist more world state (resource timers, animal state) after the core migration is validated.
+4. Add real sprite sheets, animation states, audio and richer biome composition.
